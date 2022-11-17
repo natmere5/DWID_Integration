@@ -1,0 +1,60 @@
+{
+  "name": "Download Work Item Details_Integration",
+  "description": "1.1) Login to ACME Web Application\r\n1.2) Go to Work Items\r\n1.3) Read all the columns \r\n1.4) Click Search If the year is above 2018\r\n1.5) Download the check request if it's available\r\n1.6) Save the file name as WIID in a separate folder. Read Client ID in the document (PDF Automation)\r\n1.7) Change Status to Completed. Click update work item\r\n1.8) Add comments - 'Downloaded' or 'Not downloaded'\r\n1.9) Repeat all the above steps for all records\r\n1.10) Generate Final Report - WIID,Description,Type,St",
+  "main": "Main.xaml",
+  "dependencies": {
+    "Download.Work.Item.Details_Library": "[1.0.7]",
+    "Element5.Core": "[1.2.25]",
+    "UiPath.Excel.Activities": "[2.11.4]",
+    "UiPath.Mail.Activities": "[1.12.3]",
+    "UiPath.System.Activities": "[21.10.3]",
+    "UiPath.UIAutomation.Activities": "[21.10.4]"
+  },
+  "webServices": [],
+  "entitiesStores": [],
+  "schemaVersion": "4.0",
+  "studioVersion": "21.10.4.0",
+  "projectVersion": "1.0.0",
+  "runtimeOptions": {
+    "autoDispose": false,
+    "netFrameworkLazyLoading": false,
+    "isPausable": true,
+    "isAttended": false,
+    "requiresUserInteraction": true,
+    "supportsPersistence": false,
+    "excludedLoggedData": [
+      "Private:*",
+      "*password*"
+    ],
+    "executionType": "Workflow",
+    "readyForPiP": false,
+    "startsInPiP": false,
+    "mustRestoreAllDependencies": true
+  },
+  "designOptions": {
+    "projectProfile": "Developement",
+    "outputType": "Process",
+    "libraryOptions": {
+      "includeOriginalXaml": false,
+      "privateWorkflows": []
+    },
+    "processOptions": {
+      "ignoredFiles": []
+    },
+    "fileInfoCollection": [],
+    "modernBehavior": true
+  },
+  "expressionLanguage": "VisualBasic",
+  "entryPoints": [
+    {
+      "filePath": "Main.xaml",
+      "uniqueId": "e0ebf78b-2d62-4da5-ace4-46c182684b06",
+      "input": [],
+      "output": []
+    }
+  ],
+  "isTemplate": false,
+  "templateProjectData": {},
+  "publishData": {},
+  "targetFramework": "Legacy"
+}
