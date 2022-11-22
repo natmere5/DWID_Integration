@@ -1,15 +1,21 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="Download_Work_Item_Details" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:ae="clr-namespace:Alphabet.Exception;assembly=GetXamlFileNameActivity" xmlns:da="clr-namespace:Download_Work_Item_Details_Library.ACME;assembly=Download Work Item Details_Library" xmlns:db="clr-namespace:Download_Work_Item_Details_Library.Browser;assembly=Download Work Item Details_Library" xmlns:de="clr-namespace:Download_Work_Item_Details_Library.Excel;assembly=Download Work Item Details_Library" xmlns:de1="clr-namespace:Download_Work_Item_Details_Library.Email;assembly=Download Work Item Details_Library" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:njl="clr-namespace:Newtonsoft.Json.Linq;assembly=Newtonsoft.Json" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ss="clr-namespace:System.Security;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="Download_Work_Item_Details" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:da="clr-namespace:Download_Work_Item_Details_Library.ACME;assembly=Download Work Item Details_Library" xmlns:db="clr-namespace:Download_Work_Item_Details_Library.Browser;assembly=Download Work Item Details_Library" xmlns:de="clr-namespace:Download_Work_Item_Details_Library.Excel;assembly=Download Work Item Details_Library" xmlns:de1="clr-namespace:Download_Work_Item_Details_Library.Email;assembly=Download Work Item Details_Library" xmlns:eue="clr-namespace:Element5_Core.Utils.Exception;assembly=Element5.Core" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:njl="clr-namespace:Newtonsoft.Json.Linq;assembly=Newtonsoft.Json" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ss="clr-namespace:System.Security;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
-    <x:Property Name="Config" Type="InArgument(njl:JObject)" />
-    <x:Property Name="MainFolder" Type="InArgument(x:String)" />
+    <x:Property Name="ACMEUsername" Type="InArgument(x:String)" />
+    <x:Property Name="ACMEPassword" Type="InArgument(ss:SecureString)" />
+    <x:Property Name="EmailUsername" Type="InArgument(x:String)" />
+    <x:Property Name="EmailPassword" Type="InArgument(ss:SecureString)" />
+    <x:Property Name="ColumnsAdd" Type="InArgument(s:String[])" />
+    <x:Property Name="Comments" Type="InArgument(s:String[])" />
+    <x:Property Name="FinalReportParams" Type="InArgument(s:String[])" />
+    <x:Property Name="FlowConfig" Type="InArgument(njl:JObject)" />
   </x:Members>
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>874,1383</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>874,1272</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>Download_Work_Item_Details_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
-    <scg:List x:TypeArguments="x:String" Capacity="72">
+    <scg:List x:TypeArguments="x:String" Capacity="144">
       <x:String>System.Activities</x:String>
       <x:String>System.Activities.Statements</x:String>
       <x:String>System.Activities.Expressions</x:String>
@@ -82,10 +88,12 @@
       <x:String>UiPath.Activities.System.Compression.Workflow</x:String>
       <x:String>UiPath.Shared.Activities.ConnectionService.Contracts</x:String>
       <x:String>UiPath.Web.Activities</x:String>
+      <x:String>Element5_Core.Utils.Exception</x:String>
+      <x:String>UiPath.Activities.System.Properties</x:String>
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
-    <scg:List x:TypeArguments="AssemblyReference" Capacity="41">
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="82">
       <AssemblyReference>System.Activities</AssemblyReference>
       <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
       <AssemblyReference>mscorlib</AssemblyReference>
@@ -127,241 +135,46 @@
       <AssemblyReference>UiPath.OCR.Contracts</AssemblyReference>
       <AssemblyReference>GetXamlFileNameActivity</AssemblyReference>
       <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
+      <AssemblyReference>Element5.Core</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="Download_Work_Item_Details" sap:VirtualizedContainerService.HintSize="556,1318" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="Download_Work_Item_Details" sap:VirtualizedContainerService.HintSize="480,1207" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
-      <Variable x:TypeArguments="x:String" Name="ACMEUsername" />
-      <Variable x:TypeArguments="ss:SecureString" Name="ACMEPassword" />
-      <Variable x:TypeArguments="s:String[]" Name="Comments" />
-      <Variable x:TypeArguments="s:String[]" Name="ColumnsAdd" />
       <Variable x:TypeArguments="sd:DataTable" Name="WorkItemsDT" />
-      <Variable x:TypeArguments="s:String[]" Name="FinalReportParams" />
-      <Variable x:TypeArguments="ss:SecureString" Name="EmailPassword" />
-      <Variable x:TypeArguments="x:String" Name="EmailUsername" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="514,93" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Download Work Item Details Started&quot;]" />
-    <TryCatch DisplayName="Download Work Item Details" sap:VirtualizedContainerService.HintSize="514,960" sap2010:WorkflowViewState.IdRef="TryCatch_6">
+    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="438,93" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Download Work Item Details Started&quot;]" />
+    <TryCatch DisplayName="Download Work Item Details" sap:VirtualizedContainerService.HintSize="438,849" sap2010:WorkflowViewState.IdRef="TryCatch_6">
       <TryCatch.Try>
-        <Sequence DisplayName="Process" sap:VirtualizedContainerService.HintSize="476,705" sap2010:WorkflowViewState.IdRef="Sequence_17">
+        <Sequence DisplayName="Process" sap:VirtualizedContainerService.HintSize="242,594" sap2010:WorkflowViewState.IdRef="Sequence_17">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <TryCatch DisplayName="Init" sap:VirtualizedContainerService.HintSize="434,52" sap2010:WorkflowViewState.IdRef="TryCatch_4">
+          <da:Login sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Login_1" Password="[ACMEPassword]" Username="[ACMEUsername]" />
+          <da:Dashboard sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Dashboard_1" />
+          <da:GetWorkItems AddColumns="[JObject.FromObject(New With { .column1 = ColumnsAdd(0),  .column2 = ColumnsAdd(1),  .column3 = ColumnsAdd(2)})]" FilterRow="[FlowConfig(&quot;filter_column&quot;).ToString]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="GetWorkItems_1" WorkItemsDT="[WorkItemsDT]" Year="[FlowConfig(&quot;workItem_date&quot;).ToString]" />
+          <TryCatch sap2010:Annotation.AnnotationText="Goes to Work Item Page, if button to download check report available, the file is downloaded and the ClientId gotten, at the end the information is updated in Work Item Page and Work Item row in Datatable" DisplayName="Process Work Item" sap:VirtualizedContainerService.HintSize="200,192" sap2010:WorkflowViewState.IdRef="TryCatch_7">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">False</x:Boolean>
                 <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
             <TryCatch.Try>
-              <Sequence sap2010:Annotation.AnnotationText="Initialization to begin with Download Work Item Details process" DisplayName="Init" sap:VirtualizedContainerService.HintSize="200,123" sap2010:WorkflowViewState.IdRef="Sequence_2">
-                <sap:WorkflowViewStateService.ViewState>
-                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-                    <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
-                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                  </scg:Dictionary>
-                </sap:WorkflowViewStateService.ViewState>
-                <Sequence DisplayName="Validate Inputs" sap:VirtualizedContainerService.HintSize="431,66" sap2010:WorkflowViewState.IdRef="Sequence_3">
-                  <sap:WorkflowViewStateService.ViewState>
-                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                    </scg:Dictionary>
-                  </sap:WorkflowViewStateService.ViewState>
-                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="828,91" sap2010:WorkflowViewState.IdRef="LogMessage_7" Level="Trace" Message="[&quot;Validating inputs...&quot;]" />
-                  <If Condition="[MainFolder is Nothing or Config is Nothing]" DisplayName="If any Input Argument is nothing" sap:VirtualizedContainerService.HintSize="828,451" sap2010:WorkflowViewState.IdRef="If_1">
-                    <sap:WorkflowViewStateService.ViewState>
-                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                      </scg:Dictionary>
-                    </sap:WorkflowViewStateService.ViewState>
-                    <If.Then>
-                      <Sequence DisplayName="If any Input Argument is nothing - then" sap:VirtualizedContainerService.HintSize="407,293" sap2010:WorkflowViewState.IdRef="Sequence_4">
-                        <sap:WorkflowViewStateService.ViewState>
-                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                          </scg:Dictionary>
-                        </sap:WorkflowViewStateService.ViewState>
-                        <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="365,91" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Error" Message="[&quot;Not all inputs provided&quot;]" />
-                        <ae:ThrowBusinessRuleException DisplayName="INVALID_INPUT_PARAMS" sap:VirtualizedContainerService.HintSize="365,70" sap2010:WorkflowViewState.IdRef="ThrowBusinessRuleException_2" message="[Config(&quot;INVALID_INPUT_PARAMS&quot;).ToString]" />
-                      </Sequence>
-                    </If.Then>
-                    <If.Else>
-                      <Sequence DisplayName="If any Input Argument is nothing - else" sap:VirtualizedContainerService.HintSize="376,183" sap2010:WorkflowViewState.IdRef="Sequence_5">
-                        <sap:WorkflowViewStateService.ViewState>
-                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                          </scg:Dictionary>
-                        </sap:WorkflowViewStateService.ViewState>
-                        <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Trace" Message="[&quot;All inputs provided&quot;]" />
-                      </Sequence>
-                    </If.Else>
-                  </If>
-                </Sequence>
-                <ui:MultipleAssign sap2010:Annotation.AnnotationText="Assign Config(&quot;comments&quot;) to an Array of String&#xA;Assign Config(&quot;columns_name&quot;) to an Array of String&#xA;Assign Config(&quot;final_report_params&quot;) to an Array of String" DisplayName="Init Multiple Assign" sap:VirtualizedContainerService.HintSize="431,219" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
-                  <ui:MultipleAssign.AssignOperations>
-                    <scg:List x:TypeArguments="ui:AssignOperation" Capacity="8">
-                      <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
-                        <ui:AssignOperation.To>
-                          <OutArgument x:TypeArguments="s:String[]">[Comments]</OutArgument>
-                        </ui:AssignOperation.To>
-                        <ui:AssignOperation.Value>
-                          <InArgument x:TypeArguments="s:String[]">[Config("comments").ToString.Split(",".ToCharArray)]</InArgument>
-                        </ui:AssignOperation.Value>
-                      </ui:AssignOperation>
-                      <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_2">
-                        <ui:AssignOperation.To>
-                          <OutArgument x:TypeArguments="s:String[]">[ColumnsAdd]</OutArgument>
-                        </ui:AssignOperation.To>
-                        <ui:AssignOperation.Value>
-                          <InArgument x:TypeArguments="s:String[]">[Config("columns_name").ToString.Split(",".ToCharArray)]</InArgument>
-                        </ui:AssignOperation.Value>
-                      </ui:AssignOperation>
-                      <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_3">
-                        <ui:AssignOperation.To>
-                          <OutArgument x:TypeArguments="s:String[]">[FinalReportParams]</OutArgument>
-                        </ui:AssignOperation.To>
-                        <ui:AssignOperation.Value>
-                          <InArgument x:TypeArguments="s:String[]">[Config("final_report_params").ToString.Split(",".ToCharArray)]</InArgument>
-                        </ui:AssignOperation.Value>
-                      </ui:AssignOperation>
-                    </scg:List>
-                  </ui:MultipleAssign.AssignOperations>
-                  <sap:WorkflowViewStateService.ViewState>
-                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
-                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                    </scg:Dictionary>
-                  </sap:WorkflowViewStateService.ViewState>
-                </ui:MultipleAssign>
-                <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="431,91" sap2010:WorkflowViewState.IdRef="LogMessage_8" Level="Trace" Message="[&quot;Deleting WIID folder...&quot;]" />
-                <ui:DeleteFolderX sap2010:Annotation.AnnotationText="MainFolder = IO.Directory.GetCurrentDirectory" DisplayName="Delete WIID Folder" sap:VirtualizedContainerService.HintSize="431,110" sap2010:WorkflowViewState.IdRef="DeleteFolderX_1" Path="[MainFolder + Config(&quot;monitored_folder&quot;).ToString]" Recursive="True">
-                  <sap:WorkflowViewStateService.ViewState>
-                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
-                    </scg:Dictionary>
-                  </sap:WorkflowViewStateService.ViewState>
-                </ui:DeleteFolderX>
-                <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="431,91" sap2010:WorkflowViewState.IdRef="LogMessage_9" Level="Trace" Message="[&quot;Creating WIID folder...&quot;]" />
-                <ui:CreateDirectory ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="MainFolder = IO.Directory.GetCurrentDirectory" DisplayName="Create WIID Folder" sap:VirtualizedContainerService.HintSize="431,110" sap2010:WorkflowViewState.IdRef="CreateDirectory_1" Path="[MainFolder + Config(&quot;monitored_folder&quot;).ToString]">
-                  <sap:WorkflowViewStateService.ViewState>
-                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
-                    </scg:Dictionary>
-                  </sap:WorkflowViewStateService.ViewState>
-                </ui:CreateDirectory>
-                <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="431,91" sap2010:WorkflowViewState.IdRef="LogMessage_10" Level="Trace" Message="[&quot;Getting ACME credential...&quot;]" />
-                <TryCatch DisplayName="Get ACME Credentials" sap:VirtualizedContainerService.HintSize="431,51" sap2010:WorkflowViewState.IdRef="TryCatch_1">
-                  <sap:WorkflowViewStateService.ViewState>
-                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                    </scg:Dictionary>
-                  </sap:WorkflowViewStateService.ViewState>
-                  <TryCatch.Try>
-                    <ui:GetRobotCredential TimeoutMS="{x:Null}" AssetName="[Config(&quot;acme_credential&quot;).ToString]" DisplayName="Get ACME Credential" sap:VirtualizedContainerService.HintSize="284,79" sap2010:WorkflowViewState.IdRef="GetRobotCredential_1" Password="[ACMEPassword]" Username="[ACMEUsername]" />
-                  </TryCatch.Try>
-                  <TryCatch.Catches>
-                    <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="404,21" sap2010:WorkflowViewState.IdRef="Catch`1_1">
-                      <sap:WorkflowViewStateService.ViewState>
-                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                        </scg:Dictionary>
-                      </sap:WorkflowViewStateService.ViewState>
-                      <ActivityAction x:TypeArguments="s:Exception">
-                        <ActivityAction.Argument>
-                          <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
-                        </ActivityAction.Argument>
-                        <ae:ThrowBusinessRuleException DisplayName="GET_CREDENTIAL_ERROR" sap:VirtualizedContainerService.HintSize="365,70" sap2010:WorkflowViewState.IdRef="ThrowBusinessRuleException_1" message="[Config(&quot;GET_CREDENTIAL_ERROR&quot;).ToString]" />
-                      </ActivityAction>
-                    </Catch>
-                  </TryCatch.Catches>
-                </TryCatch>
-                <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="431,91" sap2010:WorkflowViewState.IdRef="LogMessage_11" Level="Trace" Message="[&quot;Getting Email credential...&quot;]" />
-                <TryCatch DisplayName="Get Email Credentials" sap:VirtualizedContainerService.HintSize="431,51" sap2010:WorkflowViewState.IdRef="TryCatch_2">
-                  <sap:WorkflowViewStateService.ViewState>
-                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                    </scg:Dictionary>
-                  </sap:WorkflowViewStateService.ViewState>
-                  <TryCatch.Try>
-                    <ui:GetRobotCredential TimeoutMS="{x:Null}" AssetName="[Config(&quot;email_credential&quot;).ToString]" DisplayName="Get Email Credential" sap:VirtualizedContainerService.HintSize="284,79" sap2010:WorkflowViewState.IdRef="GetRobotCredential_2" Password="[EmailPassword]" Username="[EmailUsername]" />
-                  </TryCatch.Try>
-                  <TryCatch.Catches>
-                    <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="404,21" sap2010:WorkflowViewState.IdRef="Catch`1_2">
-                      <sap:WorkflowViewStateService.ViewState>
-                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                        </scg:Dictionary>
-                      </sap:WorkflowViewStateService.ViewState>
-                      <ActivityAction x:TypeArguments="s:Exception">
-                        <ActivityAction.Argument>
-                          <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
-                        </ActivityAction.Argument>
-                        <ae:ThrowBusinessRuleException DisplayName="GET_CREDENTIAL_ERROR" sap:VirtualizedContainerService.HintSize="365,70" sap2010:WorkflowViewState.IdRef="ThrowBusinessRuleException_3" message="[Config(&quot;GET_CREDENTIAL_ERROR&quot;).ToString]" />
-                      </ActivityAction>
-                    </Catch>
-                  </TryCatch.Catches>
-                </TryCatch>
-              </Sequence>
-            </TryCatch.Try>
-            <TryCatch.Catches>
-              <Catch x:TypeArguments="ui:BusinessRuleException" sap:VirtualizedContainerService.HintSize="400,21" sap2010:WorkflowViewState.IdRef="Catch`1_5">
-                <sap:WorkflowViewStateService.ViewState>
-                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                  </scg:Dictionary>
-                </sap:WorkflowViewStateService.ViewState>
-                <ActivityAction x:TypeArguments="ui:BusinessRuleException">
-                  <ActivityAction.Argument>
-                    <DelegateInArgument x:TypeArguments="ui:BusinessRuleException" Name="exception" />
-                  </ActivityAction.Argument>
-                  <Rethrow DisplayName="Rethrow - BRE" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Rethrow_2" />
-                </ActivityAction>
-              </Catch>
-              <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="400,139" sap2010:WorkflowViewState.IdRef="Catch`1_6">
-                <sap:WorkflowViewStateService.ViewState>
-                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                  </scg:Dictionary>
-                </sap:WorkflowViewStateService.ViewState>
-                <ActivityAction x:TypeArguments="s:Exception">
-                  <ActivityAction.Argument>
-                    <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
-                  </ActivityAction.Argument>
-                  <ae:ThrowApplicationException DisplayName="Throw application exception" sap:VirtualizedContainerService.HintSize="365,70" sap2010:WorkflowViewState.IdRef="ThrowApplicationException_1" message="INIT_FAILED" />
-                </ActivityAction>
-              </Catch>
-            </TryCatch.Catches>
-          </TryCatch>
-          <da:Login sap:VirtualizedContainerService.HintSize="434,22" sap2010:WorkflowViewState.IdRef="Login_1" Password="[ACMEPassword]" Username="[ACMEUsername]" />
-          <da:Dashboard sap:VirtualizedContainerService.HintSize="434,22" sap2010:WorkflowViewState.IdRef="Dashboard_1" />
-          <da:GetWorkItems AddColumns="[JObject.FromObject(New With { .column1 = ColumnsAdd(0),  .column2 = ColumnsAdd(1),  .column3 = ColumnsAdd(2)})]" FilterRow="[Config(&quot;filter_column&quot;).ToString]" sap:VirtualizedContainerService.HintSize="434,22" sap2010:WorkflowViewState.IdRef="GetWorkItems_1" WorkItemsDT="[WorkItemsDT]" Year="[Config(&quot;workItem_date&quot;).ToString]" />
-          <TryCatch DisplayName="Process Work Item" sap:VirtualizedContainerService.HintSize="434,211" sap2010:WorkflowViewState.IdRef="TryCatch_7">
-            <TryCatch.Try>
-              <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" sap2010:Annotation.AnnotationText="Process the obtained Work Items one by one" DataTable="[WorkItemsDT]" DisplayName="For Each Row in WorkItemsDT" sap:VirtualizedContainerService.HintSize="410,774" sap2010:WorkflowViewState.IdRef="ForEachRow_2">
+              <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" sap2010:Annotation.AnnotationText="Process the obtained Work Items one by one" DataTable="[WorkItemsDT]" DisplayName="For Each Row in WorkItemsDT" sap:VirtualizedContainerService.HintSize="1073,1973" sap2010:WorkflowViewState.IdRef="ForEachRow_2">
                 <ui:ForEachRow.Body>
                   <ActivityAction x:TypeArguments="sd:DataRow">
                     <ActivityAction.Argument>
                       <DelegateInArgument x:TypeArguments="sd:DataRow" Name="CurrentRow" />
                     </ActivityAction.Argument>
-                    <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="376,694" sap2010:WorkflowViewState.IdRef="Sequence_16">
+                    <Sequence DisplayName="Go to work item and download file" sap:VirtualizedContainerService.HintSize="1039,1821" sap2010:WorkflowViewState.IdRef="Sequence_16">
                       <Sequence.Variables>
                         <Variable x:TypeArguments="x:String" Name="ClientID" />
                         <Variable x:TypeArguments="x:Boolean" Name="PDFExists" />
@@ -371,26 +184,26 @@
                           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                         </scg:Dictionary>
                       </sap:WorkflowViewStateService.ViewState>
-                      <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_16" Level="Trace" Message="[&quot;Processing &quot; + CurrentRow(0).ToString + &quot; work item&quot;]" />
-                      <db:GoToWorkItem sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="GoToWorkItem_2" URL="[Config(&quot;acme_url_workitems&quot;).ToString]" WIID="[CurrentRow(0).ToString]" />
-                      <da:DownloadFile ButtonText="[Config(&quot;button_text&quot;).ToString]" CheckFilePath="[MainFolder + String.Format(Config(&quot;pdf_url&quot;).ToString, CurrentRow(0).ToString)]" ClientID="[ClientID]" sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="DownloadFile_2" />
-                      <If sap2010:Annotation.AnnotationText="Write down ClientID in WorkItemsDT if ClientID gotten" Condition="[Not ClientID is Nothing]" DisplayName="If ClientID gotten" sap:VirtualizedContainerService.HintSize="334,108" sap2010:WorkflowViewState.IdRef="If_5">
+                      <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="997,93" sap2010:WorkflowViewState.IdRef="LogMessage_16" Level="Trace" Message="[&quot;Processing &quot; + CurrentRow(0).ToString + &quot; work item&quot;]" />
+                      <db:GoToWorkItem sap:VirtualizedContainerService.HintSize="997,22" sap2010:WorkflowViewState.IdRef="GoToWorkItem_2" URL="[FlowConfig(&quot;acme_url_workitems&quot;).ToString]" WIID="[CurrentRow(0).ToString]" />
+                      <da:DownloadFile ButtonText="[FlowConfig(&quot;button_text&quot;).ToString]" CheckFilePath="[IO.Directory.GetCurrentDirectory + String.Format(FlowConfig(&quot;pdf_url&quot;).ToString, CurrentRow(0).ToString)]" ClientID="[ClientID]" sap:VirtualizedContainerService.HintSize="997,22" sap2010:WorkflowViewState.IdRef="DownloadFile_2" />
+                      <If sap2010:Annotation.AnnotationText="Write down ClientID in WorkItemsDT if ClientID gotten" Condition="[Not ClientID is Nothing]" DisplayName="If ClientID gotten" sap:VirtualizedContainerService.HintSize="997,640" sap2010:WorkflowViewState.IdRef="If_5">
                         <sap:WorkflowViewStateService.ViewState>
                           <scg:Dictionary x:TypeArguments="x:String, x:Object">
                             <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
-                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                             <x:Boolean x:Key="IsPinned">False</x:Boolean>
                           </scg:Dictionary>
                         </sap:WorkflowViewStateService.ViewState>
                         <If.Then>
-                          <Sequence DisplayName="If ClientID gotten - then" sap:VirtualizedContainerService.HintSize="476,444" sap2010:WorkflowViewState.IdRef="Sequence_13">
+                          <Sequence DisplayName="If ClientID gotten - then" sap:VirtualizedContainerService.HintSize="476,449" sap2010:WorkflowViewState.IdRef="Sequence_13">
                             <sap:WorkflowViewStateService.ViewState>
                               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                               </scg:Dictionary>
                             </sap:WorkflowViewStateService.ViewState>
-                            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="434,91" sap2010:WorkflowViewState.IdRef="LogMessage_17" Level="Warn" Message="[&quot;Updating ClientID column...&quot;]" />
-                            <ui:UpdateRowItem ColumnIndex="{x:Null}" sap2010:Annotation.AnnotationText="ColumnsAdd(1) = ClientID" ColumnName="[ColumnsAdd(1)]" DisplayName="Update ClientID Row Item" sap:VirtualizedContainerService.HintSize="434,221" sap2010:WorkflowViewState.IdRef="UpdateRowItem_4" Row="[CurrentRow]" Value="[ClientID]">
+                            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="434,93" sap2010:WorkflowViewState.IdRef="LogMessage_17" Level="Trace" Message="[&quot;Updating &quot;+ColumnsAdd(1)+&quot; column...&quot;]" />
+                            <ui:UpdateRowItem ColumnIndex="{x:Null}" sap2010:Annotation.AnnotationText="ColumnsAdd(1) = ClientID" ColumnName="[ColumnsAdd(1)]" DisplayName="Update ClientID Row Item" sap:VirtualizedContainerService.HintSize="434,224" sap2010:WorkflowViewState.IdRef="UpdateRowItem_4" Row="[CurrentRow]" Value="[ClientID]">
                               <sap:WorkflowViewStateService.ViewState>
                                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                   <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
@@ -399,33 +212,42 @@
                             </ui:UpdateRowItem>
                           </Sequence>
                         </If.Then>
+                        <If.Else>
+                          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,93" sap2010:WorkflowViewState.IdRef="LogMessage_20" Level="Trace" Message="[&quot;Not Updating &quot;+ColumnsAdd(1)+&quot; column...&quot;]" />
+                        </If.Else>
                       </If>
-                      <ui:FileExistsX DisplayName="Check request file downloaded?" Exists="[PDFExists]" sap:VirtualizedContainerService.HintSize="334,51" sap2010:WorkflowViewState.IdRef="FileExistsX_2" Path="[MainFolder + String.Format(Config(&quot;pdf_url&quot;).ToString,CurrentRow(0).ToString)]">
+                      <ui:FileExistsX DisplayName="Check request file downloaded?" Exists="[PDFExists]" sap:VirtualizedContainerService.HintSize="997,134" sap2010:WorkflowViewState.IdRef="FileExistsX_2" Path="[IO.Directory.GetCurrentDirectory + String.Format(FlowConfig(&quot;pdf_url&quot;).ToString,CurrentRow(0).ToString)]">
                         <sap:WorkflowViewStateService.ViewState>
                           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                             <x:Boolean x:Key="IsPinned">False</x:Boolean>
                           </scg:Dictionary>
                         </sap:WorkflowViewStateService.ViewState>
                       </ui:FileExistsX>
-                      <If sap2010:Annotation.AnnotationText="Update Work Item in ACME&#xA;Update Work Item in WorkItemsDT" Condition="[PDFExists]" DisplayName="If Check request file downloaded" sap:VirtualizedContainerService.HintSize="334,108" sap2010:WorkflowViewState.IdRef="If_6">
+                      <If sap2010:Annotation.AnnotationText="Update Work Item in ACME&#xA;Update Work Item in WorkItemsDT" Condition="[PDFExists]" DisplayName="If Check request file downloaded" sap:VirtualizedContainerService.HintSize="997,618" sap2010:WorkflowViewState.IdRef="If_6">
                         <sap:WorkflowViewStateService.ViewState>
                           <scg:Dictionary x:TypeArguments="x:String, x:Object">
                             <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
-                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                             <x:Boolean x:Key="IsPinned">False</x:Boolean>
                           </scg:Dictionary>
                         </sap:WorkflowViewStateService.ViewState>
                         <If.Then>
-                          <Sequence sap:VirtualizedContainerService.HintSize="476,367" sap2010:WorkflowViewState.IdRef="Sequence_14">
+                          <Sequence DisplayName="If Check request file downloaded - then" sap:VirtualizedContainerService.HintSize="476,401" sap2010:WorkflowViewState.IdRef="Sequence_14">
                             <sap:WorkflowViewStateService.ViewState>
                               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                               </scg:Dictionary>
                             </sap:WorkflowViewStateService.ViewState>
-                            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="434,91" sap2010:WorkflowViewState.IdRef="LogMessage_18" Level="Trace" Message="[&quot;File downloaded, updating Work Item accordingly&quot;]" />
-                            <da:ChangeStatus Comments="[Comments(0)]" sap:VirtualizedContainerService.HintSize="434,22" sap2010:WorkflowViewState.IdRef="ChangeStatus_3" />
-                            <ui:UpdateRowItem ColumnIndex="{x:Null}" sap2010:Annotation.AnnotationText="ColumnsAdd(0) = DownloadStatus" ColumnName="[ColumnsAdd(0)]" DisplayName="Update DownloadStatus Row Item" sap:VirtualizedContainerService.HintSize="434,82" sap2010:WorkflowViewState.IdRef="UpdateRowItem_5" Row="[CurrentRow]" Value="[Comments(0)]">
+                            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="434,93" sap2010:WorkflowViewState.IdRef="LogMessage_18" Level="Trace" Message="[&quot;File downloaded, updating Work Item accordingly&quot;]" />
+                            <da:ChangeStatus sap2010:Annotation.AnnotationText="Comments(0) = Downloaded" Comments="[Comments(0)]" sap:VirtualizedContainerService.HintSize="434,53" sap2010:WorkflowViewState.IdRef="ChangeStatus_3">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                            </da:ChangeStatus>
+                            <ui:UpdateRowItem ColumnIndex="{x:Null}" sap2010:Annotation.AnnotationText="ColumnsAdd(0) = DownloadStatus" ColumnName="[ColumnsAdd(0)]" DisplayName="Update DownloadStatus Row Item" sap:VirtualizedContainerService.HintSize="434,83" sap2010:WorkflowViewState.IdRef="UpdateRowItem_5" Row="[CurrentRow]" Value="[Comments(0)]">
                               <sap:WorkflowViewStateService.ViewState>
                                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                   <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
@@ -437,15 +259,21 @@
                           </Sequence>
                         </If.Then>
                         <If.Else>
-                          <Sequence sap:VirtualizedContainerService.HintSize="476,367" sap2010:WorkflowViewState.IdRef="Sequence_15">
+                          <Sequence DisplayName="If Check request file downloaded - else" sap:VirtualizedContainerService.HintSize="476,414" sap2010:WorkflowViewState.IdRef="Sequence_15">
                             <sap:WorkflowViewStateService.ViewState>
                               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                               </scg:Dictionary>
                             </sap:WorkflowViewStateService.ViewState>
-                            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="434,91" sap2010:WorkflowViewState.IdRef="LogMessage_19" Level="Trace" Message="[&quot;File not downloaded, updating Work Item accordingly&quot;]" />
-                            <da:ChangeStatus Comments="[Comments(1)]" sap:VirtualizedContainerService.HintSize="434,22" sap2010:WorkflowViewState.IdRef="ChangeStatus_4" />
-                            <ui:UpdateRowItem ColumnIndex="{x:Null}" sap2010:Annotation.AnnotationText="ColumnsAdd(0) = DownloadStatus" ColumnName="[ColumnsAdd(0)]" DisplayName="Update DownloadStatus Row Item" sap:VirtualizedContainerService.HintSize="434,82" sap2010:WorkflowViewState.IdRef="UpdateRowItem_6" Row="[CurrentRow]" Value="[Comments(1)]">
+                            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="434,93" sap2010:WorkflowViewState.IdRef="LogMessage_19" Level="Trace" Message="[&quot;File not downloaded, updating Work Item accordingly&quot;]" />
+                            <da:ChangeStatus sap2010:Annotation.AnnotationText="Comments(1) = Not Downloaded" Comments="[Comments(1)]" sap:VirtualizedContainerService.HintSize="434,66" sap2010:WorkflowViewState.IdRef="ChangeStatus_4">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                            </da:ChangeStatus>
+                            <ui:UpdateRowItem ColumnIndex="{x:Null}" sap2010:Annotation.AnnotationText="ColumnsAdd(0) = DownloadStatus" ColumnName="[ColumnsAdd(0)]" DisplayName="Update DownloadStatus Row Item" sap:VirtualizedContainerService.HintSize="434,83" sap2010:WorkflowViewState.IdRef="UpdateRowItem_6" Row="[CurrentRow]" Value="[Comments(1)]">
                               <sap:WorkflowViewStateService.ViewState>
                                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                   <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
@@ -463,17 +291,17 @@
                 <sap:WorkflowViewStateService.ViewState>
                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
                     <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
-                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                     <x:Boolean x:Key="IsPinned">False</x:Boolean>
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
               </ui:ForEachRow>
             </TryCatch.Try>
             <TryCatch.Catches>
-              <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="400,22" sap2010:WorkflowViewState.IdRef="Catch`1_9">
+              <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="400,204" sap2010:WorkflowViewState.IdRef="Catch`1_9">
                 <sap:WorkflowViewStateService.ViewState>
                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                     <x:Boolean x:Key="IsPinned">False</x:Boolean>
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
@@ -481,7 +309,13 @@
                   <ActivityAction.Argument>
                     <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
                   </ActivityAction.Argument>
-                  <ae:ThrowApplicationException DisplayName="Throw application exception" sap:VirtualizedContainerService.HintSize="365,70" sap2010:WorkflowViewState.IdRef="ThrowApplicationException_3" message="WORK_ITEM_PROCESS_ERROR" />
+                  <eue:Throw_Business_Exception DisplayName="Throw Business Exception" sap:VirtualizedContainerService.HintSize="284,134" sap2010:WorkflowViewState.IdRef="Throw_Business_Exception_2" MessageCode="WORK_ITEM_PROCESS_ERROR" __Prefix="[IO.Directory.GetCurrentDirectory]">
+                    <eue:Throw_Business_Exception.ExtraMessage>
+                      <InArgument x:TypeArguments="x:String">
+                        <Literal x:TypeArguments="x:String" DisplayName="Literal&lt;String&gt;" Value="" />
+                      </InArgument>
+                    </eue:Throw_Business_Exception.ExtraMessage>
+                  </eue:Throw_Business_Exception>
                 </ActivityAction>
               </Catch>
               <Catch x:TypeArguments="ui:BusinessRuleException" sap:VirtualizedContainerService.HintSize="400,22" sap2010:WorkflowViewState.IdRef="Catch`1_10">
@@ -500,12 +334,12 @@
               </Catch>
             </TryCatch.Catches>
           </TryCatch>
-          <de:FinalReport FinalReportPath="[MainFolder + Config(&quot;final_report_path&quot;).ToString]" sap:VirtualizedContainerService.HintSize="434,22" sap2010:WorkflowViewState.IdRef="FinalReport_2" ParametersDT="[JObject.FromObject(New With { .sheet_name = FinalReportParams(0),  .range = FinalReportParams(1)})]" WorkItemsDT="[WorkItemsDT]" />
-          <de1:SendFinalReport EmailData="[JObject.FromObject(New With { .To = Config(&quot;email_to&quot;).ToString,  .Subject = Config(&quot;email_subject&quot;).ToString,  .Body = Config(&quot;email_body&quot;).ToString,  .Email = EmailUsername,  .Server = Config(&quot;smtp_server&quot;).ToString,  .Port = Config(&quot;smtp_port&quot;).ToString})]" sap:VirtualizedContainerService.HintSize="434,22" sap2010:WorkflowViewState.IdRef="SendFinalReport_2" Password="[EmailPassword]" ZipData="[JObject.FromObject(New With { .ZipFile = Config(&quot;zip_file&quot;).ToString,  .ZipFolder = MainFolder + Config(&quot;monitored_folder&quot;).ToString})]" />
+          <de:FinalReport FinalReportPath="[IO.Directory.GetCurrentDirectory + FlowConfig(&quot;final_report_path&quot;).ToString]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="FinalReport_2" ParametersDT="[JObject.FromObject(New With { .sheet_name = FinalReportParams(0),  .range = FinalReportParams(1)})]" WorkItemsDT="[WorkItemsDT]" />
+          <de1:SendFinalReport EmailData="[JObject.FromObject(New With { .To = FlowConfig(&quot;email_to&quot;).ToString,  .Subject = FlowConfig(&quot;email_subject&quot;).ToString,  .Body = FlowConfig(&quot;email_body&quot;).ToString,  .Email = EmailUsername,  .Server = FlowConfig(&quot;smtp_server&quot;).ToString,  .Port = FlowConfig(&quot;smtp_port&quot;).ToString})]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="SendFinalReport_2" Password="[EmailPassword]" ZipData="[JObject.FromObject(New With { .ZipFile = FlowConfig(&quot;zip_file&quot;).ToString,  .ZipFolder = IO.Directory.GetCurrentDirectory + FlowConfig(&quot;monitored_folder&quot;).ToString})]" />
         </Sequence>
       </TryCatch.Try>
       <TryCatch.Catches>
-        <Catch x:TypeArguments="ui:BusinessRuleException" sap:VirtualizedContainerService.HintSize="480,22" sap2010:WorkflowViewState.IdRef="Catch`1_11">
+        <Catch x:TypeArguments="ui:BusinessRuleException" sap:VirtualizedContainerService.HintSize="404,22" sap2010:WorkflowViewState.IdRef="Catch`1_11">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -519,7 +353,7 @@
             <Rethrow DisplayName="Rethrow - BRE" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Rethrow_5" />
           </ActivityAction>
         </Catch>
-        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="480,22" sap2010:WorkflowViewState.IdRef="Catch`1_12">
+        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="404,22" sap2010:WorkflowViewState.IdRef="Catch`1_12">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -530,11 +364,17 @@
             <ActivityAction.Argument>
               <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
             </ActivityAction.Argument>
-            <ae:ThrowApplicationException DisplayName="Throw application exception" sap:VirtualizedContainerService.HintSize="365,70" sap2010:WorkflowViewState.IdRef="ThrowApplicationException_4" message="WORK_ITEM_PROCESS_ERROR" />
+            <eue:Throw_Business_Exception DisplayName="Throw Business Exception" sap:VirtualizedContainerService.HintSize="284,134" sap2010:WorkflowViewState.IdRef="Throw_Business_Exception_1" MessageCode="WORK_ITEM_PROCESS_ERROR" __Prefix="[IO.Directory.GetCurrentDirectory]">
+              <eue:Throw_Business_Exception.ExtraMessage>
+                <InArgument x:TypeArguments="x:String">
+                  <Literal x:TypeArguments="x:String" DisplayName="Literal&lt;String&gt;" Value="" />
+                </InArgument>
+              </eue:Throw_Business_Exception.ExtraMessage>
+            </eue:Throw_Business_Exception>
           </ActivityAction>
         </Catch>
       </TryCatch.Catches>
     </TryCatch>
-    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="514,93" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Download Work Item Details Ended&quot;]" />
+    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="438,93" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Download Work Item Details Ended&quot;]" />
   </Sequence>
 </Activity>
